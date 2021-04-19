@@ -1,0 +1,7 @@
+RUN	upload_log_test	upload-log-test	1618845215579	 	3.5.0
+USER	upload_ios	START	1618845217055
+REQUEST		springboot_home	1618845217089	1618845217253	KO	jsonPath($.msg).find.is(0), but actually found success
+USER	upload_ios	END	1618845217369
+USER	upload_ios	START	1618845218040
+REQUEST		springboot_home	1618845218042	1618845218140	KO	jsonPath($.msg).find.is(0), but actually found success
+USER	upload_ios	END	1618845218145

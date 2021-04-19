@@ -1,0 +1,10 @@
+{
+  "simulation": "upload_log_test",
+  "simulationId": "upload-log-test",
+  "start": 1618845173149,
+  "description": "",
+  "scenarios": ["upload_ios"],
+  "assertions": [
+
+  ]
+}
