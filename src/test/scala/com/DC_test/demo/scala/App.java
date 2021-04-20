@@ -35,8 +35,9 @@ public class App {
         Schema schema = new Schema.Parser().parse(schema_str);
         // Decoder jsonDecoder = DecoderFactory.get().jsonDecoder(schema, json);
         Decoder jsonDecoder = new ExtendedJsonDecoder(schema, json);
+        System.out.println(jsonDecoder);
         Encoder binEncoder = EncoderFactory.get().binaryEncoder(os, null);
-
+        System.out.println(binEncoder);
         GenericDatumReader<Object> reader = new GenericDatumReader<Object>(schema);
         GenericDatumWriter<Object> writer = new GenericDatumWriter<Object>(schema);
         Object datum = null;
@@ -62,15 +63,15 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         // 1. request token
-//        String token_str = Request.Post("https://apex-dc-api-test.chinapex.com.cn/signature/password_token")
-//                .bodyString("{\"app_id\": \"18e94303355ed4e7fe20f928cb663f99c7de0905\", \"app_secret\": \"ec49291da062b806d721d18c1c735ea900d1f66b\"}", ContentType.APPLICATION_JSON)
-//                .execute()
-//                .returnContent()
-//                .asString();
-//
-//        Map<String, Object> token_json = new ObjectMapper().readValue(token_str, Map.class);
-//        String access_token = (String) ((Map<String, Object>) token_json.get("result")).get("access_token");
-//        System.out.println("access_token:" + access_token);
+        String token_str = Request.Post("https://apex-dc-api-test.chinapex.com.cn/signature/password_token")
+                .bodyString("{\"app_id\": \"18e94303355ed4e7fe20f928cb663f99c7de0905\", \"app_secret\": \"ec49291da062b806d721d18c1c735ea900d1f66b\"}", ContentType.APPLICATION_JSON)
+                .execute()
+                .returnContent()
+                .asString();
+
+        Map<String, Object> token_json = new ObjectMapper().readValue(token_str, Map.class);
+        String access_token = (String) ((Map<String, Object>) token_json.get("result")).get("access_token");
+        System.out.println("access_token:" + access_token);
 //
 
         // 2. push data
@@ -91,15 +92,15 @@ public class App {
 //
 //System.out.println(Base64.getEncoder().encodeToString(jsonToAvroBin(schema_str, data_str))) ;
 
+        App APP = new App();
+        String push_response = Request.Post("https://apex-dc-push-test.chinapex.com.cn/buffer/bucket/dc/path/sdk_dev/avro_bulk_gzip")
+            .addHeader("Authorization", "Bearer " + access_token)
+            .addHeader("Content-Type", "application/octet-steam")
 
-//        String push_response = Request.Post("https://apex-dc-push-test.chinapex.com.cn/buffer/bucket/dc/path/sdk_dev/avro_bulk_gzip")
-//            .addHeader("Authorization", "Bearer " + access_token)
-//            .addHeader("Content-Type", "application/octet-steam")
-//
-//            .bodyByteArray(gzip(jsonToAvroBin(schema_str, data_str)))
-//            .execute()
-//            .returnContent()
-//            .asString();
+            .bodyByteArray(gzip(APP.jsonToAvroBin(schema_str, data_str)))
+            .execute()
+            .returnContent()
+            .asString();
 
 
     }
