@@ -1,4 +1,4 @@
 host: https://apex-dc-push-test.chinapex.com.cn
-repeat: 2
-during: 1
-user: 1
+repeat: 1
+during: 15
+user: 2000
