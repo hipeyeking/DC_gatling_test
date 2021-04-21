@@ -10,6 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="scala-sdk-2.13.5" level="application" />
     <orderEntry type="library" name="Maven: io.gatling.highcharts:gatling-charts-highcharts:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: io.gatling:gatling-app:3.5.0" level="project" />
@@ -90,6 +91,6 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
-    <orderEntry type="library" name="scala-sdk-2.13.5" level="application" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.28" level="project" />
   </component>
 </module>

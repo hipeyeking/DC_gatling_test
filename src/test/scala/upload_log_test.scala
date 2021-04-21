@@ -8,7 +8,7 @@ import test.upload_log.mapTypeFeeder
 class upload_log_test extends Simulation {
 
   val httpConfig = http
-    .baseUrl(test.url_map.test)
+    .baseUrl(test.config_map.host)
 
   //val feeder = csv("search.csv").batch.random
   val staff = scenario("upload_ios")
@@ -16,7 +16,7 @@ class upload_log_test extends Simulation {
 
     .exec(test.upload_log.scn)
   setUp(
-    staff.inject(rampUsersPerSec(1) to (1) during (2)))
+    staff.inject(rampUsersPerSec(1) to (test.config_map.user) during (test.config_map.during)))
     .protocols(httpConfig)
 
 }
