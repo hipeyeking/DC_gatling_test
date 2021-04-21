@@ -5,6 +5,7 @@ import test.upload_log.mapTypeFeeder
 
 
 
+
 class upload_log_test extends Simulation {
 
   val httpConfig = http
