@@ -13,10 +13,13 @@ class upload_log_test extends Simulation {
   //val feeder = csv("search.csv").batch.random
   val staff = scenario("upload_ios")
     .feed(mapTypeFeeder)
+    .repeat(test.config_map.repeat) {
 
-    .exec(test.upload_log.scn)
+
+      exec(test.upload_log.scn)
+  }
   setUp(
-    staff.inject(rampUsersPerSec(1) to (test.config_map.user) during (test.config_map.during)))
+    staff.inject(rampUsersPerSec(test.config_map.user) to (test.config_map.user) during (test.config_map.during)))
     .protocols(httpConfig)
 
 }

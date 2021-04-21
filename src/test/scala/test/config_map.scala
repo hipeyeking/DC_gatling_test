@@ -12,10 +12,11 @@ object config_map {
   val yaml = new Yaml()
   val obj = yaml.load(stream).asInstanceOf[util.HashMap[String, Object]]
   val host   = obj.get("host").asInstanceOf[String]
+  val repeat      = obj.get("repeat").asInstanceOf[Int]
   val during      = obj.get("during").asInstanceOf[Int]
   val user      = obj.get("user").asInstanceOf[Int]
 
-  val test = host
+
   //val test = "https://apex-dc-push-test.chinapex.com.cn"
   //val map = Map("test"->"   ".toByte)
 }
