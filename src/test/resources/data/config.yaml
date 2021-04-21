@@ -1,4 +1,4 @@
-host: https://apex-dc-push-test.chinapex.com.cn
+host: https://apex-dc-test.chinapex.com.cn
 repeat: 1
-during: 15
-user: 2000
+during: 5
+user: 10

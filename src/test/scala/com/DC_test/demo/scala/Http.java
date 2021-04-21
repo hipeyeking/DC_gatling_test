@@ -1,6 +1,7 @@
 package com.DC_test.demo.scala;
 
 import com.alibaba.fastjson.JSONObject;
+import scala.None;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class Http {
      *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return URL 所代表远程资源的响应结果
      */
-    public static String sendGet(String url, String param) {
+    public static String sendGet(String url, String param,String token) {
         String result = "";
         BufferedReader in = null;
         try {
@@ -30,6 +31,7 @@ public class Http {
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
             // 设置通用的请求属性
+            connection.setRequestProperty("Authorization","Bearer "+token);
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent",
@@ -75,7 +77,7 @@ public class Http {
      *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return 所代表远程资源的响应结果
      */
-    public static String sendPost(String url, String param) {
+    public static String sendPost(String url, String param,String token) {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -84,6 +86,8 @@ public class Http {
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
             // 设置通用的请求属性
+            conn.setRequestProperty("Authorization","Bearer "+token);
+            conn.setRequestProperty("token",token);
             conn.setRequestProperty("accept", "*/*");
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -132,12 +136,29 @@ public class Http {
         return access_token;
 
     }
+    public static String getClientToken(String sr) {
+        JSONObject outJson = JSONObject.parseObject(sr);
+        String client_access_token =outJson.getString("data");
+        System.out.println(client_access_token);
+        return client_access_token;
+
+    }
+    public static String getAppId(String sr) {
+        JSONObject outJson = JSONObject.parseObject(sr);
+        String app_id =outJson.getJSONObject("data").getJSONArray("results").getJSONObject(0).getJSONArray("productList").getJSONObject(0).getString("appId");
+        System.out.println(app_id);
+        return app_id;
+
+    }
     public static void main(String[] args) {
         //发送 POST 请求
-        String sr=Http.sendPost("https://apex-dc-api-test.chinapex.com.cn/signature/password_token", "{\"app_id\": \"18e94303355ed4e7fe20f928cb663f99c7de0905\", \"app_secret\": \"ec49291da062b806d721d18c1c735ea900d1f66b\"}");
+        String sr=Http.sendPost("https://apex-dc-test.chinapex.com.cn/nexus/api/dc/project/query", "{\"page\":1,\"size\":10}","eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxZmIzYTc4NWFlMGU4Mjc4YjE2YmY0MDUxYmJjMmUwNiIsImlzcyI6ImNoaW5hcGV4IiwiYXVkIjoid3d3LmNoaW5hcGV4LmNvbSIsInN1YiI6Im1lQG5leHVzIiwiaWF0IjoxNjE5MDA4NTExLCJleHAiOjE2MTkwOTQ5MTF9.IJAcVSn2lrkd7ugRs3bHS3K1LhcekKUjtc_4-HvXj5g");
         System.out.println(sr);
         JSONObject outJson = JSONObject.parseObject(sr);
-        String access_token =outJson.getJSONObject("result").getString("access_token");
-        System.out.println(access_token);
+        String app_id =outJson.getJSONObject("data").getJSONArray("results").getJSONObject(0).getJSONArray("productList").getJSONObject(0).getString("appId");
+        System.out.println(app_id);
+//        JSONObject outJson = JSONObject.parseObject(sr);
+//        String access_token =outJson.getJSONObject("result").getString("access_token");
+//        System.out.println(access_token);
     }
 }
